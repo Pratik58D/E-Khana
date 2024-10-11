@@ -1,9 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../../assets/assets";
 import "./login.css";
+import { StoreContext } from "../../context/StoreContext";
 
 const LogIn = ({ setShowLogin }) => {
+  const {url} = useContext(StoreContext);
+
+
   const [currentState, setCurrentstate] = useState("Login");
+  const [data,setData] = useState({
+    name : "",
+    email: "",
+    password: ""
+  })
+
+  const onChangeHandler = (e) =>{
+    // console.log(e)
+    const name =  e.target.name;
+    const value = e.target.value;
+    setData({...data,[name] : value});
+}
+
+useEffect(()=>{
+  console.log(data)
+},[data])
 
   return (
     <div className="login absolute z-20 w-full h-full bg-[#00000090] grid">
@@ -24,19 +44,28 @@ const LogIn = ({ setShowLogin }) => {
           ) : (
             <input
               type="text"
+              name  = "name"
+              value={data.name}
               placeholder="Your name"
+              onChange={onChangeHandler}
               className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-blue-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-2 focus:border-blue-500 hover:border-blue-500 shadow-sm focus:shadow"
               required
             />
           )}
           <input
             type="email"
+            name="email"
+            value={data.email}
+            onChange={onChangeHandler}
             placeholder="Your email"
             required
             className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-blue-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-2 focus:border-blue-500 hover:border-blue-500 shadow-sm focus:shadow"
           />
           <input
             type="password"
+            name="password"
+            value={data.password}
+            onChange={onChangeHandler}
             placeholder="Password"
             className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-blue-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-2 focus:border-blue-500 hover:border-blue-500 shadow-sm focus:shadow"
             required
