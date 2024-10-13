@@ -2,32 +2,57 @@ import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../../assets/assets";
 import "./login.css";
 import { StoreContext } from "../../context/StoreContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const LogIn = ({ setShowLogin }) => {
-  const {url} = useContext(StoreContext);
-
+  const { url, setToken } = useContext(StoreContext);
 
   const [currentState, setCurrentstate] = useState("Login");
-  const [data,setData] = useState({
-    name : "",
+  const [data, setData] = useState({
+    name: "",
     email: "",
-    password: ""
-  })
+    password: "",
+  });
 
-  const onChangeHandler = (e) =>{
+  const onChangeHandler = (e) => {
     // console.log(e)
-    const name =  e.target.name;
+    const name = e.target.name;
     const value = e.target.value;
-    setData({...data,[name] : value});
-}
+    setData({ ...data, [name]: value });
+  };
 
-useEffect(()=>{
-  console.log(data)
-},[data])
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  const onLogin = async (event) => {
+    event.preventDefault();
+    let newUrl = url;
+    if (currentState === "Login") {
+      newUrl += "/api/user/login";
+    } else {
+      newUrl += "/api/user/register";
+    }
+
+    const response = await axios.post(newUrl, data);
+    // console.log(response)
+    if (response.data.success) {
+      setToken(response.data.token);
+      localStorage.setItem("token",response.data.token);
+      toast.success(response.data.message);
+      setShowLogin(false);
+    } else {
+      toast.error(response.data.message);
+    }
+  };
 
   return (
     <div className="login absolute z-20 w-full h-full bg-[#00000090] grid">
-      <form className="login-form place-self-center  text-[#808080] bg-white flex flex-col gap-6 py-6 px-7  rounded-lg text-2xl ">
+      <form
+        onSubmit={onLogin}
+        className="login-form place-self-center  text-[#808080] bg-white flex flex-col gap-6 py-6 px-7  rounded-lg text-2xl"
+      >
         <div className="login-popup-title flex justify-between items-center text-black">
           <h2 className="font-semibold text-2xl">{currentState}</h2>
           <img
@@ -44,7 +69,7 @@ useEffect(()=>{
           ) : (
             <input
               type="text"
-              name  = "name"
+              name="name"
               value={data.name}
               placeholder="Your name"
               onChange={onChangeHandler}
@@ -71,11 +96,14 @@ useEffect(()=>{
             required
           />
         </div>
-        <button className="bg-red-500 text-white py-2 rounded-lg hover:bg-red-800 capitalize">
+        <button
+          type="submit"
+          className="bg-red-500 text-white py-2 rounded-lg hover:bg-red-800 capitalize"
+        >
           {currentState === "Sign up" ? "create account" : "Login"}
         </button>
         <div className="login-popup-conndition flex gap-3 text-[1rem] items-center">
-          <input  className="cursor-pointer" type="checkbox" required />
+          <input className="cursor-pointer" type="checkbox" required />
           <p>By continuing , I agree to the terms of use & privacy policy.</p>
         </div>
         {currentState === "Login" ? (

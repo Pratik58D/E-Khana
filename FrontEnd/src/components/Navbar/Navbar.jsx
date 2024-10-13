@@ -1,12 +1,32 @@
 import React, { useContext, useState } from "react";
 import { assets } from "../../assets/assets";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cart from "../../pages/cart/Cart";
 import { StoreContext } from "../../context/StoreContext";
 
 const Navbar = ({ setShowLogin }) => {
   const [menu, setmenu] = useState("home");
-  const { getTotalCartAmount } = useContext(StoreContext);
+  const { getTotalCartAmount, token, setToken } = useContext(StoreContext);
+
+
+    // State to control profile dropdown visibility
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    // Function to toggle dropdown on click
+    const handleProfileClick = () => {
+      setShowDropdown(!showDropdown);
+    };
+
+    const navigate = useNavigate();
+
+    const logOut = ()=>{
+      localStorage.removeItem("token");
+      setToken("");
+      navigate("/");
+    }
+  
+
+
 
   return (
     <div className="py-5 px-4 sm:px-6 lg:px-8 flex justify-between items-center bg-white shadow-md">
@@ -76,12 +96,39 @@ const Navbar = ({ setShowLogin }) => {
             <div className="absolute -top-2 -right-2 w-3 h-3 bg-red-500 rounded-full"></div>
           )}
         </div>
-        <button
-          onClick={() => setShowLogin(true)}
-          className="hidden md:block bg-transparent text-[14px] sm:text-[16px] text-[#444444] border-2 border-red-400 py-2 px-4 sm:py-3 sm:px-6 rounded-lg cursor-pointer duration-300 hover:bg-slate-200"
-        >
-          Sign In
-        </button>
+        {!token ? (
+          <button
+            onClick={() => setShowLogin(true)}
+            className="hidden md:block bg-transparent text-[14px] sm:text-[16px] text-[#444444] border-2 border-red-400 py-2 px-4 sm:py-3 sm:px-6 rounded-lg cursor-pointer duration-300 hover:bg-slate-200"
+          >
+            Sign In
+          </button>
+        ) : (
+          <div
+          onClick={handleProfileClick} // Toggle dropdown on click
+          className="navbar-profile relative group">
+            <img src={assets.profile_icon} alt="" />  
+              {/* Dropdown will be shown either on hover or click */}
+            <ul
+             className={`nav-profile-dropdown absolute right-0  mt-2 w-52 bg-white border border-gray-200 shadow-lg rounded-lg p-4 ${showDropdown ? "flex" : "hidden"} group-hover:flex flex-col gap-3 z-10`}>
+              <li className="flex items-center gap-2 cursor-pointer">
+                <img src={assets.bag_icon} alt="Orders" className="w-7 h-7" />
+                <p className="hover:text-red-400">Orders</p>
+              </li>
+              <hr />
+              <li
+              onClick={logOut}
+              className="flex items-center gap-2 cursor-pointer">
+                <img
+                  src={assets.logout_icon}
+                  alt="Logout"
+                  className="w-7 h-7"
+                />
+                <p className="hover:text-red-400">Logout</p>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Mobile Menu Toggle */}

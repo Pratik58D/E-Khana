@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PlaceOrder from "../PlaceOrder/PlaceOrder";
 
 const Cart = () => {
-  const { food_list, cartItems,getTotalCartAmount, removeFromCart } =
+  const { food_list, cartItems,getTotalCartAmount, removeFromCart ,url} =
     useContext(StoreContext);
     const navigate = useNavigate()
 
@@ -26,7 +26,7 @@ const Cart = () => {
             return (
               <>
                 <div className="my-2 grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] items-center text-[#131111] text-[1.2rem] py-2">
-                  <img className="w-14 rounded-md" src={item.image} alt="" />
+                  <img className="w-14 rounded-md" src={url+"/images/"+item.image} alt="" />
                   <p>{item.name}</p>
                   <p>NPR.{item.price}</p>
                   <p>{cartItems[item._id]}</p>
