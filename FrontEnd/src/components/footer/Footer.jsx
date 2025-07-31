@@ -1,4 +1,4 @@
-import React from "react";
+
 import { assets } from "../../assets/assets";
 
 const Footer = () => {
@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="footer-content-left w-[40%] flex flex-col items-start gap-5">
           <img src={assets.logo} alt="" className="w-40 " />
           <p  className="text-justify">
-            Ekhana is your go-to online food delivery platform. Whether you're
+            Ekhana is your go-to online food delivery platform. Whether you are
             craving fast food, traditional meals, or snacks, we deliver fresh
             and delicious food straight to your door.
           </p>

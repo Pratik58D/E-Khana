@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
@@ -9,6 +9,7 @@ import LogIn from "./components/login/LogIn";
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EsewaIntegration from "./pages/esewaIntegration/EsewaIntegration";
 
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<PlaceOrder />} />
+          <Route path="/esewa" element={<EsewaIntegration />} />
         </Routes>
       </div>
       <Footer />

@@ -1,0 +1,27 @@
+import  { useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
+import "../esewaIntegration.css"
+
+const PaymentSuccess = () => {
+  const [search] = useSearchParams();
+  const dataQuery = search.get("data");
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    const resData = atob(dataQuery);
+    const resObject = JSON.parse(resData);
+    console.log(resObject);
+
+    setData(resObject);
+  }, [search]);
+
+  return (
+    <div className="payment-container">
+      <img src="src/assests/check.png" alt="" />
+      <p className="price">Rs. {data.total_amount}</p>
+      <p className="status">Payment Successful</p>
+    </div>
+  );
+};
+
+export default PaymentSuccess;

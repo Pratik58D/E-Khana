@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
-import PlaceOrder from "../PlaceOrder/PlaceOrder";
 
 const Cart = () => {
   const { food_list, cartItems,getTotalCartAmount, removeFromCart ,url} =
@@ -21,7 +20,7 @@ const Cart = () => {
         </div>
         <hr className="h-0.5 bg-slate-200 border-none" />
 
-        {food_list.map((item, index) => {
+        {food_list.map((item) => {
           if (cartItems[item._id] > 0) {
             return (
               <>

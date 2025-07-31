@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
   const { getTotalCartAmount } = useContext(StoreContext);
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   return (
     <>
       <form className="place-order flex items-start justify-between gap-14 mt-24">
@@ -84,7 +84,7 @@ const PlaceOrder = () => {
             </div>
           </div>
           <button
-            onClick={() => navigate("/order")}
+            onClick={() => navigate("/esewa")}
             className="border-none text-white bg-red-500 w-[max(20vw,250px)] py-3 rounded-md cursor-pointer hover:bg-red-800"
           >
             PROCEED TO PAYMENT

@@ -34,17 +34,29 @@ const LogIn = ({ setShowLogin }) => {
     } else {
       newUrl += "/api/user/register";
     }
-
-    const response = await axios.post(newUrl, data);
-    // console.log(response)
-    if (response.data.success) {
-      setToken(response.data.token);
-      localStorage.setItem("token",response.data.token);
-      toast.success(response.data.message);
-      setShowLogin(false);
-    } else {
-      toast.error(response.data.message);
+    try{
+      const response = await axios.post(newUrl, data);
+      // console.log(response)
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        toast.success(response.data.message);
+        setShowLogin(false);
+      } else {
+        toast.error(response.data.message); // Show error message when success is false
+      }
     }
+    catch (error) {
+      // If an error occurs, handle it and show a toast
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message); // Show backend error message
+      } else {
+        toast.error("An error occurred. Please try again."); // Show generic error message
+      }
+      console.error("Login error:", error); // Log the error for debugging purposes
+    }
+
+   
   };
 
   return (

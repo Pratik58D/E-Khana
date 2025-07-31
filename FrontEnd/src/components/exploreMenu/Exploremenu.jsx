@@ -7,7 +7,7 @@ const Exploremenu = ({category,setCateogry}) => {
     <div className="explore-menu flex flex-col gap-5" id="explore-menu">
       <h1 className="text-[#222121] font-semibold text-2xl">Explore Our Menu</h1>
       <p className="explore-menu-text max-w-[70%] text-[#608a89]">
-        Hungry? We've got the perfect solution. Order your favorite dishes from
+        Hungry? We have got the perfect solution. Order your favorite dishes from
         top-rated restaurants and enjoy fresh, hot meals brought directly to
         your door, hassle-free.
       </p>
